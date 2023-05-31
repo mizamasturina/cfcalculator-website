@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Carbon Footprint Calculator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="05cf.css">
+</head>
+<body>
+	<header>
+		<nav>
+			<ul>
+				<li><a href="01landingpage.html">Home</a></li>
+				<li><a href="02calculator.html">Carbon Footprint Calculator</a></li><br>
+			</ul>
+		</nav>
+	</header>
+	
+	<section id="head">
+
+		<br><center><h1>Carbon Footprint Calculator</h1></center><br>
+		<center><h3>Find out your carbon footprint and learn how to reduce it!</h3></center>
+
+	</section>
+
+	<div>
+		<br><br><center><h2>Carbon Footprint Consumption</h2></center>
+	</div>
+	
+	<script>
+
+		function showQuestion(questionId) {
+		  var questionToDisplay = document.getElementById(questionId);
+		  var allQuestions = document.querySelectorAll('.question');
+	
+		  allQuestions.forEach(function(question) {
+			if (question === questionToDisplay) {
+			  question.style.display = 'block';
+			} else {
+			  question.style.display = 'none';
+			}
+		  });
+		}
+
+		function calculateEmissions() {
+		// Get the selected option values
+		var carType= parseFloat(document.getElementById("transportlabel1").value);
+		var carpoolFrequency = parseFloat(document.getElementById("transportlabel2").value);
+		var carDistance = parseFloat(document.getElementById("transportlabel3").value);
+		var publicTransportUsage = parseFloat(document.getElementById("transportlabel4").value);
+		var publicTransportFrequency = parseFloat(document.getElementById("transportlabel5").value);
+		var publicTransportDistance = parseFloat(document.getElementById("transportlabel6").value);
+		var motorcycleType = parseFloat(document.getElementById("transportlabel7").value);
+		var motorcycleDistance = parseFloat(document.getElementById("transportlabel8").value);
+
+		var electricbill = parseFloat(document.getElementById("electriclabel1").value);
+		var electricpeople = parseFloat(document.getElementById("electriclabel2").value);
+		var electricefficient = parseFloat(document.getElementById("electriclabel3").value);
+		var electrichours = parseFloat(document.getElementById("electriclabel4").value);
+		var electricstar = parseFloat(document.getElementById("electriclabel5").value);
+
+		var fooddiet = parseFloat(document.getElementById("foodlabel1").value);
+		var foodgood = parseFloat(document.getElementById("foodlabel2").value);
+		var foodwaste = parseFloat(document.getElementById("foodlabel3").value);
+		var foodcompost = parseFloat(document.getElementById("foodlabel4").value); 
+
+		var watershower = parseFloat(document.getElementById("waterlabel2").value);
+		var watertap = parseFloat(document.getElementById("waterlabel3").value);
+		var waterpractice = parseFloat(document.getElementById("waterlabel4").value);
+		var waterwaste = parseFloat(document.getElementById("waterlabel5").value);
+		var waterrain = parseFloat(document.getElementById("waterlabel6").value);
+		
+		var bus = parseFloat(document.getElementById("travel1").value);
+		var buskm = parseFloat(document.getElementById("travel2").value);
+		var flight = parseFloat(document.getElementById("travel3").value);
+		var flightkm = parseFloat(document.getElementById("travel4").value); 
+		
+		// Perform the calculations
+		var carEmission = ( carType - (carType * carpoolFrequency) ) * carDistance;
+		var publicEmission =  (publicTransportUsage - (publicTransportUsage * publicTransportFrequency) ) * publicTransportDistance;
+		var motorEmission =  motorcycleType * motorcycleDistance;
+
+		var billcf= electricbill * 12;
+		var efficientcf = ((electricefficient * 11 * (3 + electrichours))/1000)*365;
+		var starcf = (electricbill * electricstar) * 12;
+
+		var cfTransportationyear = ((carEmission + publicEmission + motorEmission)/1000000)*365;	
+		var electriccf = ((billcf - efficientcf - starcf)/electricpeople) * 0.0055;
+		var foodcfyear= fooddiet + foodgood + foodwaste + foodcompost;
+		var watercfyear= ((watershower + watertap + waterpractice - waterwaste - waterrain)* 0.000000298)*365;
+		var travelcf= (bus*buskm) + (flight*flightkm);
+
+		var totalcf= cfTransportationyear + electriccf + foodcfyear + watercfyear;
+		var planttrees= totalcf / (((24*2.3)*365)*0.001);
+
+
+		var roundtransportcf = parseFloat(cfTransportationyear.toFixed(2));
+		var roundelectriccf = parseFloat(electriccf.toFixed(2));
+		var roundfoodcf = parseFloat(foodcfyear.toFixed(2));
+		var roundwatercf= parseFloat(watercfyear.toFixed(2));
+		var roundtravelcf= parseFloat(travelcf.toFixed(2));
+		
+		var roundtotalcf= parseFloat(totalcf.toFixed(2));
+		var roundplant= parseFloat(planttrees.toFixed(1));
+		
+
+		// Display the results
+		
+		document.getElementById("totalTransportationEmissionyear").innerHTML = "Total Daily Transportation Consumption per year: " + roundtransportcf + " tCO2/km";
+		document.getElementById("totalelectricyear").innerHTML = "Total Electricity Consumption per year: " + roundelectriccf + " tCO2/kWh";
+		document.getElementById("totalfoodyear").innerHTML = "Total Food Consumption per year: " + roundfoodcf + " tCO2/kg";
+		document.getElementById("totalwateryear").innerHTML = "Total Water Consumption per year: " + roundwatercf+ " tCO2/l";
+		document.getElementById("totaltravelyear").innerHTML = "Total Travel Consumption per year: " + roundtravelcf+ " tCO2/km";
+		document.getElementById("totalcfyear").innerHTML = "Total Carbon Footprint  per year: " + roundtotalcf + " tCO2e";
+		document.getElementById("totaloffsetyear").innerHTML = "Number of Trees to be Planted Against Carbon Emission : " + roundplant ;
+		}
+
+	 </script>
+		  
+	<div class="question-container">
+
+		<div class="icons-container">
+			<img src="icon1.png" onclick="showQuestion('question1')" alt="Question 1">
+			<img src="icon2.png" onclick="showQuestion('question2')" alt="Question 2">
+			<img src="icon3.png" onclick="showQuestion('question3')" alt="Question 3">
+			<img src="icon4.png" onclick="showQuestion('question4')" alt="Question 4">
+			<img src="icon5.png" onclick="showQuestion('question5')" alt="Question 5">      
+		</div>
+
+		<div id="question1" class="question">
+		<center><form id="form4">
+			<center><br><h2>Daily Transportation Consumption</h2></center><br>
+			<hr class="my-4">
+			<br><label for="transportlabel1">If you are using a car, which of these best describes the car you use most?</label>
+			<select class="select" id="transportlabel1">
+				<option selected disable>Choose your option</option>
+					<option value="0">I don't travel using a car</option>
+					<option value="46.58">Electric Car</option>
+					<option value="22.74">Hybrid Car</option>
+					<option value="131.7">Petrol car (less than 1.4)</option>
+					<option value="157.2">Petrol car (1.4 to 2.0)</option>
+					<option value="249.7">Petrol car (more than 2.0)</option>
+					<option value="161.1">Diesel car (1.7 to 2.0)</option>
+					<option value="171.5">Diesel car (more than 2.0)</option>
+			</select>	
+
+			<br><label for="transportlabel2">Do you practice carpooling with others?</label>
+			<select class="select" id="transportlabel2">
+				<option selected disable>Choose your option</option>		
+					<option value="0.18">Yes</option>
+					<option value="0">No</option>
+			</select>
+			
+				
+			<br><label for="transportlabel3">What is your distance travelled while using a car in a week?</label>
+			
+			<br><input type="number" id="transportlabel3" placeholder="Enter km" min="0">
+
+			<br><label for="transportlabel4">Do you travel using public transportation?</label>
+			<select class="select" id="transportlabel4">
+				<option selected disable>Choose your option</option>		
+					<option value="96.48">Yes</option>
+					<option value="0">No</option>
+			</select>
+
+			<br><label for="transportlabel5">How many times do you use public transportation in a week?</label>
+			<br><input type="number" id="transportlabel5" placeholder="Enter frequency" min="0">			
+			
+
+			<br><label for="transportlabel6">What is your distance travelled while using a public transport in a week?</label>		
+			<br><input type="number" id="transportlabel6" placeholder="Enter km" min="0">			
+
+			<br><label for="transportlabel7">If you are using motorcycle, which of these best describes the motorcycle you use most?</label>
+			<select class="select" id="transportlabel7">
+				<option selected disable>Choose your option</option>
+				<option value="0">I don't travel using a motorcycle</option>
+					<option value="22">Electric Motorcycle</option>
+					<option value="85">Small petrol motorcycle (less than 125cc)</option>
+					<option value="103.2">Medium petrol motorcycle (126cc to 500cc)</option>
+					<option value="137.2">Big petrol motorcycle (more than 500cc)</option>
+			</select>	
+			
+			<br><label for="transportlabel8">What is your distance travelled while using a motorcycle in a week?</label>
+			
+			<br><input type="number" id="transportlabel8" placeholder="Enter km" min="0">
+		
+		</form></center>
+
+		<center><button onclick="showQuestion('question2')" alt="Question 2">Next!</center><br><br>
+		
+	  </div>
+
+	  <div id="question5" class="question"style="display: none;">
+		<center><form id="form5">
+			<center><br><h2>Travel Consumption</h2></center><br>
+			<hr class="my-4">
+
+			<br><label for="travel1">Do you travel using bus?</label>
+			<select class="select" id="travel1">
+				<option selected disable>Choose your option</option>		
+					<option value="0.0001859">Yes</option>
+					<option value="0">No</option>
+			</select>		
+			
+			<br><label for="travel2">What is your total distance travelled using bus in a year?</label>		
+			<br><input type="number" id="travel2" placeholder="Enter km" min="0">	
+			
+			<br><label for="travel3">Do you travel using flight?</label>
+			<select class="select" id="travel3">
+				<option selected disable>Choose your option</option>		
+					<option value="0.0001631">Yes</option>
+					<option value="0">No</option>
+			</select>		
+			
+			<br><label for="travel4">What is your total distance travelled using flight in a year?</label>		
+			<br><input type="number" id="travel4" placeholder="Enter km" min="0">
+	
+		</form></center>
+
+		
+		<center><button onclick="calculateEmissions()">Let's Calculate!</button></center><br>
+
+		<div class="result-container">
+			<h5>Annual Emissions</h5><br>
+			<table>
+			  <tr>
+				<th>Category Consumption</th>
+				<th>Emission Value</th>
+			  </tr>
+			  <tr>
+				<td>Transportation</td>
+				<td id="totalTransportationEmissionyear"></td>
+			  </tr>
+			  <tr>
+				<td>Electricity</td>
+				<td id="totalelectricyear"></td>
+			  </tr>
+			  <tr>
+				<td>Food</td>
+				<td id="totalfoodyear"></td>
+			  </tr>
+			  <tr>
+				<td>Water</td>
+				<td id="totalwateryear"></td>
+			  </tr>
+			  <tr>
+				<td>Travel</td>
+				<td id="totaltravelyear"></td>
+			  </tr>
+			  <tr>
+				<td>Total Carbon Footprint</td>
+				<td id="totalcfyear"></td>
+			  </tr>
+			  <tr>
+				<td>Total Offset</td>
+				<td id="totaloffsetyear"></td>
+			  </tr>
+			</table><br><br>
+
+		  </div>
+		  
+
+		
+	  </div>
+	
+	  <div id="question2" class="question" style="display: none;">
+
+		<center><form id="form1">
+			<center><br><h2>Electricity Consumption</h2></center><br>
+			<hr class="my-4">
+
+			<br><label for="electriclabel1">How much kWh do you use monthly?</label>
+				<br><input type="number" id="electriclabel1" placeholder="Enter kWh per month" min="0">	
+			
+			<br><label for="electriclabel2">How many people are in your household?</label>
+			<br><input type="number" id="electriclabel2" placeholder="Enter number of people in household" min="0">	
+
+			<br><label for="electriclabel3">Do you use energy-efficient appliances such as LED light bulbs ?</label>
+			<select class="select" id="electriclabel3">
+				<option selected disable>Choose your option</option>
+					<option value="9">Yes</option>
+					<option value="0">No</option>
+			</select>
+
+			<br><label for="electriclabel4">How many hours do you left your lights on when not in use?</label>
+				<br><input type="number" id="electriclabel4" placeholder="Enter hours" min="0">	
+				
+			<br><label for="electriclabel5">Do you use a 5 star rating electrical appliances at home or work ?</label>
+			<select class="select" id="electriclabel5">
+				<option selected disable>Choose your option</option>
+					<option value="0.5">Yes</option>
+					<option value="0">No</option>
+			</select></center>
+		</form>
+		<center><button onclick="showQuestion('question3')" alt="Question 3">Next!</center><br><br>
+
+	  </div>
+	
+	  <div id="question3" class="question" style="display: none;">
+		<center><form id="form2">
+			<center><br><h2>Food Consumption</h2></center><br>
+			<hr class="my-4">
+
+			<br><label for="foodlabel1">How would you describe your diet?</label>
+			<select class="select" id="foodlabel1">
+				<option selected disable>Choose your option</option>
+					<option value="3.3">Meat in every meal</option>
+					<option value="2.5">Meat in some meals</option>
+					<option value="1.9">No Meat</option>
+					<option value="1.7">Vegetarian</option>
+					<option value="1.5">Vegan</option>
+			</select>
+
+			<br><label for="foodlabel2">How often do you buy locally sourced goods?</label>
+			<select class="select" id="foodlabel2">
+				<option selected disable>Choose your option</option>
+					<option value="8">Never- I only buy imported goods</option>
+					<option value="0.16">Rarely- I buy more imported goods compared to local goods</option>
+					<option value="0.24">Sometimes- Half of my goods are locally sourced</option>
+					<option value="0.32">Often- I buy more local goods compared to imported goods</option>
+					<option value="0.4">Very Often- I only buy local goods</option>
+			</select>
+
+			<br><label for="foodlabel3">How much do you throw away your food waste?</label>
+			<select class="select" id="foodlabel3">
+				<option selected disable>Choose your option</option>
+					<option value="0.0004">10%</option>
+					<option value="0.001025">25%</option>
+					<option value="0.00205">50%</option>
+					<option value="0.003075">75%</option>
+					<option value="0.0041">100%</option>
+			</select>
+
+			<br><label for="foodlabel4">How often do you compost food?</label>
+			<select class="select" id="foodlabel4">
+				<option selected disable>Choose your option</option>
+					<option value="0.1143">Never</option>
+					<option value="0.0857">Rarely</option>
+					<option value="0.05715">Sometimes</option>
+					<option value="0.02858">Often</option>
+					<option value="0.0114">Very Often</option>
+			</select>
+		</form>
+		<center><button onclick="showQuestion('question4')" alt="Question 4">Next!</center><br><br>
+	  </div>
+
+	  	
+	
+	  <div id="question4" class="question" style="display: none;">
+		<center><form id="form3">
+			<center><br><h2>Water Consumption</h2></center><br>
+			<hr class="my-4">
+
+			<br><label for="waterlabel2">How long is your average shower?</label>
+			<select class="select" id="waterlabel2">
+				<option selected disable>Choose your option</option>
+					<option value="37.8541">under 5 mins</option>
+					<option value="75.7082">5-10 mins</option>
+					<option value="124.919">11-30 mins</option>
+					<option value="143.846">over 30 mins</option>
+			</select>
+
+			<br><label for="waterlabel3">How long do you turn leave the tap water while brushing teeth in a day?</label>
+			<select class="select" id="waterlabel3">
+				<option selected disable>Choose your option</option>
+					<option value="22.7125">under 5 mins</option>
+					<option value="45.4249">5-10 mins</option>
+					<option value="113.562">11-30 mins</option>
+					<option value="170.344">over 30 mins</option>
+			</select>
+
+			<br><label for="waterlabel4">Do you use low-flow showerheads or faucets?</label>
+			<select class="select" id="waterlabel4">
+				<option selected disable>Choose your option</option>
+					<option value="0">Yes</option>
+					<option value="37.8541">No</option>
+			</select>
+
+			<br><label for="waterlabel5">Do you use clean waste water sinks and washing machines for non-potable purposes?</label>
+			<select class="select" id="waterlabel5">
+				<option selected disable>Choose your option</option>
+					<option value="15.1416">Yes</option>
+					<option value="0">No</option>
+			</select>
+
+			<br><label for="waterlabel6">Do you conserve rainwater for gardening purposes ?</label>
+			<select class="select" id="waterlabel6">
+				<option selected disable>Choose your option</option>
+					<option value="15.1416">Yes</option>
+					<option value="0">No</option>
+			</select>	
+
+		</form></center>
+
+		<center><button onclick="showQuestion('question5')" alt="Question 5">Next!</center><br><br>
+
+		</div>
+
+</div>
+
+
+
+	
+</body>
+</html>
