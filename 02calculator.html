@@ -77,7 +77,7 @@
 		
 		// Perform the calculations
 		var carEmission = ( carType - (carType * carpoolFrequency) ) * carDistance;
-		var publicEmission =  (publicTransportUsage - (publicTransportUsage * publicTransportFrequency) ) * publicTransportDistance;
+		var publicEmission =  (publicTransportUsage * publicTransportFrequency) * publicTransportDistance;
 		var motorEmission =  motorcycleType * motorcycleDistance;
 
 		var billcf= electricbill * 12;
@@ -131,7 +131,7 @@
 		<center><form id="form4">
 			<center><br><h2>Daily Transportation Consumption</h2></center><br>
 			<hr class="my-4">
-			<br><label for="transportlabel1">If you are using a car, which of these best describes the car you use most?</label>
+			<br><label for="transportlabel1">If you are using a car to go to work/class, which of these best describes the car you use daily?</label>
 			<select class="select" id="transportlabel1">
 				<option selected disable>Choose your option</option>
 					<option value="0">I don't travel using a car</option>
@@ -156,7 +156,7 @@
 			
 			<br><input type="number" id="transportlabel3" placeholder="Enter km" min="0">
 
-			<br><label for="transportlabel4">Do you travel using public transportation?</label>
+			<br><label for="transportlabel4">Do you use public transportation to work/class?</label>
 			<select class="select" id="transportlabel4">
 				<option selected disable>Choose your option</option>		
 					<option value="96.48">Yes</option>
@@ -170,7 +170,7 @@
 			<br><label for="transportlabel6">What is your distance travelled while using a public transport in a week?</label>		
 			<br><input type="number" id="transportlabel6" placeholder="Enter km" min="0">			
 
-			<br><label for="transportlabel7">If you are using motorcycle, which of these best describes the motorcycle you use most?</label>
+			<br><label for="transportlabel7">If you are using motorcycle to go to work/class, which of these best describes the motorcycle you use the most?</label>
 			<select class="select" id="transportlabel7">
 				<option selected disable>Choose your option</option>
 				<option value="0">I don't travel using a motorcycle</option>
